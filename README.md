@@ -1,2 +1,3 @@
-# george-rading
-Personal portfolio: data scientist, full-stack developer, creative technologist.
+# George M. Rading — Portfolio
+
+Personal portfolio site built with HTML, CSS, and vanilla JS.
