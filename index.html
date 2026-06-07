@@ -17,6 +17,9 @@
       width: 100%;
       scroll-behavior: smooth;
     }
+    body {
+      padding-top: 80px;
+    }
 
     /* Light mode, pure white background */
     :root {
@@ -58,9 +61,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 36px 0 28px;
+      padding: 20px 48px;
+      border-bottom: 1px solid transparent;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+    }
+    .nav.scrolled {
+      background: rgba(248, 250, 249, 0.85);
       border-bottom: 1px solid var(--border-subtle);
-      margin-bottom: 80px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     .logo {
       font-size: 16px;
@@ -70,6 +84,8 @@
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
+      text-decoration: none;
+      cursor: pointer;
     }
     .nav-links {
       display: flex;
@@ -577,11 +593,11 @@
     }
   </style>
 </head>
-<body>
+<body id="top">
 
 <div class="container">
   <div class="nav">
-    <div class="logo">George Rading</div>
+    <a href="#top" class="logo">George Rading</a>
     <div class="nav-links">
       <a href="#work">Work</a>
       <a href="#philosophy">Philosophy</a>
@@ -712,7 +728,7 @@
   <div class="container">
     <div class="section-headline">Background</div>
     <div class="edu-item">
-      <span class="edu-year">2021–2025</span>
+      <span class="edu-year">2023–2026</span>
       <span class="edu-desc"><strong>BSc in Data Science and Analytics</strong>, United States International University - Africa</span>
     </div>
     <div class="edu-item">
@@ -792,6 +808,16 @@
     container.appendChild(d);
     container.scrollTop = container.scrollHeight;
   }
+
+  // Navbar scroll effect
+  const nav = document.querySelector('.nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
 
   const modal = document.getElementById('cliModal');
   const openBtn = document.getElementById('openTerminalBtn');
