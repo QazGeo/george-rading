@@ -591,6 +591,68 @@
       color: var(--text-soft);
       margin-bottom: 44px;
     }
+
+    /* ===== HAMBURGER MENU ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 101;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--accent-deep);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+    @media (max-width: 768px) {
+      .nav {
+        padding: 18px 24px;
+        flex-wrap: wrap;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        padding: 12px 0 8px;
+        border-top: 1px solid var(--border-subtle);
+        margin-top: 12px;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .nav-links a {
+        padding: 12px 0;
+        font-size: 16px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .nav-links a:last-child {
+        border-bottom: none;
+      }
+      .nav-links a::after {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body id="top">
@@ -598,10 +660,15 @@
 <div class="container">
   <div class="nav">
     <a href="#top" class="logo">George Rading</a>
-    <div class="nav-links">
-      <a href="#work">Work</a>
-      <a href="#philosophy">Philosophy</a>
-      <a href="#contact">Contact</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#work" class="nav-link">Work</a>
+      <a href="#philosophy" class="nav-link">Philosophy</a>
+      <a href="#contact" class="nav-link">Contact</a>
     </div>
   </div>
 
@@ -710,7 +777,7 @@
       <!-- Left: About -->
       <div class="philosophy-left">
         <p class="philosophy-about">
-          Every system starts as a blank file. I build it, then I try to break it, tweak values, push it past where it should fail, see what holds. When it ships, it's built to last.
+          Every system starts as a blank file. That moment, before anything exists, is where the work begins. I build, then I try to break it: stress‑test edge cases, push past failure points, see what holds. When it ships, it’s done right.
         </p>
         <p class="philosophy-about" style="margin-top: 16px; font-style: italic; color: var(--accent-deep);">
           Data without context is noise. Systems without purpose are just infrastructure.
@@ -880,6 +947,24 @@
     }
   });
   document.getElementById('linkedinLink')?.addEventListener('click', (e) => { e.preventDefault(); alert('linkedin.com/in/george-rading, add your profile link'); });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // Close menu when a link is clicked
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
 </script>
 </body>
 </html>
