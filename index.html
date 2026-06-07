@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>George Rating, data, systems, narrative</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      scroll-behavior: smooth;
+    }
+
+    /* Light mode, pure white background */
+    :root {
+      --bg-body: #ffffff;
+      --bg-surface: #ffffff;
+      --bg-warm-section: #f8f9fa;
+      --text-primary: #1c1c1e;
+      --text-secondary: #4a4a4e;
+      --text-soft: #6e6e73;
+      --border-subtle: #e6e6ea;
+      --accent-deep: #0f6b5c;
+      --accent-bright: #1b8c74;
+      --accent-glow: #2aa989;
+      --accent-light: #e0f0ec;
+      --accent-mist: #f0f8f5;
+      --pill-bg: #e0f0ec;
+      --terminal-bg: #0f0f12;
+      --terminal-header: #2c2c2f;
+      --terminal-text: #e2e2e8;
+    }
+
+    body {
+      background: var(--bg-body);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
+      line-height: 1.5;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ===== NAVIGATION ===== */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 36px 0 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 80px;
+    }
+    .logo {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+      background: linear-gradient(135deg, var(--accent-deep), var(--accent-bright));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 15px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-bright);
+      transition: width 0.2s;
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    .nav-links a:hover {
+      color: var(--accent-deep);
+    }
+
+    /* ===== HERO, WHY ===== */
+    .hero {
+      margin-bottom: 120px;
+    }
+    .greeting {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--accent-bright);
+      margin-bottom: 20px;
+      letter-spacing: -0.2px;
+    }
+    .hero-title {
+      font-size: 58px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      margin-bottom: 28px;
+      background: linear-gradient(130deg, #1a2a32 0%, var(--accent-deep) 70%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .hero-intro {
+      font-size: 20px;
+      font-weight: 420;
+      color: var(--text-secondary);
+      max-width: 720px;
+      margin-bottom: 36px;
+      line-height: 1.45;
+    }
+    .hero-intro strong {
+      color: var(--accent-deep);
+      font-weight: 550;
+    }
+    .hero-signature {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 14px;
+      background: var(--accent-mist);
+      padding: 6px 14px;
+      border-radius: 40px;
+      color: var(--accent-deep);
+      border: 1px solid var(--accent-light);
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      margin-bottom: 110px;
+    }
+    .section-headline {
+      font-size: 28px;
+      font-weight: 620;
+      letter-spacing: -0.003em;
+      margin-bottom: 44px;
+      color: var(--text-primary);
+      border-left: 4px solid var(--accent-bright);
+      padding-left: 18px;
+    }
+
+    /* ===== PHILOSOPHY, HOW ===== */
+    .deep-dive {
+      font-size: 24px;
+      font-weight: 460;
+      line-height: 1.35;
+      color: var(--text-primary);
+      max-width: 780px;
+      margin-bottom: 32px;
+    }
+    .deep-dive-quote {
+      font-size: 1rem;
+      color: var(--accent-bright);
+      margin-bottom: 24px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+    .deep-dive-detail {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      border-left: 2px solid var(--accent-light);
+      padding-left: 28px;
+    }
+    .deep-dive-detail em {
+      color: var(--accent-deep);
+      font-style: normal;
+      font-weight: 520;
+    }
+
+    /* ===== PROJECTS, WHAT ===== */
+    .project {
+      margin-bottom: 88px;
+      transition: transform 0.2s;
+    }
+    .project-title {
+      font-size: 38px;
+      font-weight: 620;
+      letter-spacing: -0.002em;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    .project-role {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 36px;
+      font-family: monospace;
+      letter-spacing: 0.3px;
+    }
+    .story-block {
+      border-left: 2px solid var(--accent-light);
+      padding-left: 28px;
+      margin-bottom: 32px;
+      transition: border-color 0.25s;
+    }
+    .project:hover .story-block {
+      border-left-color: var(--accent-bright);
+    }
+    .story-label {
+      font-size: 12px;
+      font-weight: 620;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent-bright);
+      margin-bottom: 10px;
+    }
+    .story-text {
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+    .tech-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .pill {
+      font-size: 13px;
+      font-family: monospace;
+      color: var(--accent-deep);
+      background: var(--pill-bg);
+      padding: 6px 16px;
+      border-radius: 40px;
+      transition: all 0.2s;
+    }
+    .pill:hover {
+      background: var(--accent-bright);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    /* ===== TOOLKIT ===== */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 56px;
+    }
+    .skill-area {
+      flex: 1;
+      min-width: 180px;
+    }
+    .skill-area h4 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+    .skill-area p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== BACKGROUND SECTION ===== */
+    .background-section {
+      margin: 0 0 100px;
+      padding: 80px 28px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-warm-section);
+    }
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.3;
+      animation: float 22s infinite ease-in-out;
+      pointer-events: none;
+    }
+    .bg-orb-1 {
+      width: 320px;
+      height: 320px;
+      background: var(--accent-bright);
+      top: -120px;
+      right: 5%;
+      animation-delay: 0s;
+    }
+    .bg-orb-2 {
+      width: 240px;
+      height: 240px;
+      background: #cbe8e2;
+      bottom: -80px;
+      left: 10%;
+      animation-delay: -6s;
+      animation-duration: 26s;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(20px, -20px) scale(1.05); }
+      66% { transform: translate(-15px, 15px) scale(0.97); }
+    }
+    .edu-item {
+      margin-bottom: 28px;
+    }
+    .edu-year {
+      font-size: 16px;
+      font-weight: 550;
+      color: var(--accent-deep);
+      display: inline-block;
+      width: 120px;
+    }
+    .edu-desc {
+      font-size: 17px;
+      color: var(--text-secondary);
+    }
+    .edu-desc strong {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* ===== CONTACT ===== */
+    .contact {
+      margin-top: 80px;
+      padding-top: 56px;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 44px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .contact-links a {
+      text-decoration: none;
+      font-size: 15px;
+      color: var(--accent-deep);
+      font-weight: 500;
+      transition: all 0.2s;
+      border-bottom: 1px dotted transparent;
+    }
+    .contact-links a:hover {
+      color: var(--accent-bright);
+      border-bottom-color: var(--accent-bright);
+    }
+    .footer-note {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    /* ===== CLI EASTER EGG ===== */
+    .cli-easteregg {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 100;
+    }
+    .egg-btn {
+      background: linear-gradient(135deg, var(--accent-deep), var(--accent-bright));
+      color: white;
+      border: none;
+      border-radius: 60px;
+      padding: 12px 28px;
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(27, 140, 116, 0.3);
+      transition: all 0.25s ease;
+      animation: gentlePulse 3s infinite;
+    }
+    .egg-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 28px rgba(27, 140, 116, 0.45);
+      animation: none;
+    }
+    @keyframes gentlePulse {
+      0% { box-shadow: 0 8px 20px rgba(27, 140, 116, 0.25); }
+      50% { box-shadow: 0 8px 28px rgba(27, 140, 116, 0.5); }
+      100% { box-shadow: 0 8px 20px rgba(27, 140, 116, 0.25); }
+    }
+
+    /* ===== TERMINAL MODAL ===== */
+    .term-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .term-modal.active {
+      opacity: 1;
+    }
+    .term-window {
+      width: 90%;
+      max-width: 600px;
+      background: var(--terminal-bg);
+      border-radius: 32px;
+      font-family: monospace;
+      box-shadow: 0 40px 60px -20px black;
+      overflow: hidden;
+      transform: scale(0.96);
+      transition: transform 0.25s;
+      border: 1px solid rgba(27, 140, 116, 0.4);
+    }
+    .term-modal.active .term-window {
+      transform: scale(1);
+    }
+    .term-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: var(--terminal-header);
+      color: #e5e5ea;
+      font-size: 13px;
+    }
+    .term-body {
+      padding: 24px;
+      height: 320px;
+      overflow-y: auto;
+      background: var(--terminal-bg);
+    }
+    .term-output {
+      color: var(--terminal-text);
+      font-size: 13px;
+      margin-bottom: 14px;
+      white-space: pre-wrap;
+      border-left: 2px solid var(--accent-bright);
+      padding-left: 14px;
+    }
+    .term-input-area {
+      display: flex;
+      gap: 14px;
+      padding: 16px 24px;
+      background: var(--terminal-bg);
+      border-top: 1px solid #2c2c2f;
+    }
+    .term-prompt {
+      color: var(--accent-bright);
+    }
+    .term-input {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: monospace;
+      font-size: 13px;
+      flex: 1;
+      outline: none;
+    }
+    .close-term {
+      background: none;
+      border: none;
+      color: #a1a1a6;
+      cursor: pointer;
+      font-size: 20px;
+      transition: color 0.2s;
+    }
+    .close-term:hover {
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 40px; }
+      .project-title { font-size: 28px; }
+      .deep-dive { font-size: 20px; }
+      .section-headline { font-size: 24px; }
+      .bg-orb { display: none; }
+      .container { padding: 0 20px; }
+    }
+
+    /* ===== PHILOSOPHY SECTION ===== */
+    .philosophy-grid {
+      max-width: 720px;
+    }
+    .philosophy-about {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .philosophy-process {
+      font-size: 15px;
+      color: var(--text-soft);
+      border-left: 2px solid var(--accent-light);
+      padding-left: 20px;
+      line-height: 1.6;
+      max-width: 420px;
+    }
+    .philosophy-right {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      padding-top: 8px;
+    }
+    .philosophy-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .phil-link {
+      font-size: 15px;
+      color: var(--accent-deep);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dotted transparent;
+      transition: all 0.2s;
+      width: fit-content;
+    }
+    .phil-link:hover {
+      color: var(--accent-bright);
+      border-bottom-color: var(--accent-bright);
+    }
+    @media (max-width: 768px) {
+      .philosophy-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    .contact-icon-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--accent-deep);
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-bottom: 1px dotted transparent;
+      width: fit-content;
+      margin: 0 auto;
+    }
+    .contact-icon-link svg {
+      stroke: var(--accent-deep);
+      transition: stroke 0.2s;
+      flex-shrink: 0;
+    }
+    .contact-icon-link:hover {
+      color: var(--accent-bright);
+      border-bottom-color: var(--accent-bright);
+    }
+    .contact-icon-link:hover svg {
+      stroke: var(--accent-bright);
+    }
+
+    /* ===== CLOSING SIGNATURE ===== */
+    .closing-name {
+      font-size: 32px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      background: linear-gradient(130deg, #1a2a32 0%, var(--accent-deep) 70%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 10px;
+    }
+    .closing-line {
+      font-size: 16px;
+      color: var(--text-soft);
+      margin-bottom: 44px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="nav">
+    <div class="logo">George Rating</div>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+
+  <!-- WHY: Hero, purpose and belief -->
+  <div class="hero">
+    <div class="greeting">I'm George</div>
+    <div class="hero-title">I build systems that turn raw data into clear decisions.</div>
+    <div class="hero-intro">
+      Data means nothing until someone acts on it. A farmer choosing what to plant. A dispatcher routing the right truck. A manager finally seeing the pattern.<br><br>
+      <strong>I build the systems that get them there.</strong>
+    </div>
+    <div class="hero-signature">data scientist · full‑stack developer · creative technologist</div>
+  </div>
+
+  <!-- Toolkit -->
+  <section id="toolkit" style="margin-bottom: 110px;">
+    <div class="section-headline">My toolkit</div>
+    <div class="skills-grid">
+      <div class="skill-area">
+        <h4>Data & Analytics</h4>
+        <p>Python, R, SQL · Pandas, NumPy · Power BI, Seaborn · ETL, Hadoop</p>
+      </div>
+      <div class="skill-area">
+        <h4>Development</h4>
+        <p>React + TypeScript · Flask, Django · PostgreSQL, REST APIs · JWT</p>
+      </div>
+      <div class="skill-area">
+        <h4>ML & Forecasting</h4>
+        <p>scikit-learn · NLTK · SARIMAX</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT: Projects, tangible outcomes -->
+  <section id="work">
+    <div class="section-headline">What I've built</div>
+
+    <div class="project">
+      <div class="project-title">Malawi Forecasts</div>
+      <div class="project-role">Data Engineer & Full Stack · 2025</div>
+      <div class="story-block">
+        <div class="story-label">The friction</div>
+        <div class="story-text">Farmers in rural Malawi were guessing planting seasons. Climate data existed, but only as fragmented files, no one could turn them into a “plant this now” recommendation.</div>
+      </div>
+      <div class="story-block">
+        <div class="story-label">The system</div>
+        <div class="story-text">A pipeline that ingests 5 years of climate records, engineers seasonal features, then runs a decision tree classifier that explains its recommendations in plain language. Offline dashboards + CSV exports for field use without internet.</div>
+      </div>
+      <div class="story-block">
+        <div class="story-label">The outcome</div>
+        <div class="story-text">Planners now use 5‑year forecasts to guide crop choices. The system is simple enough to trust, flexible enough to adapt.</div>
+      </div>
+      <div class="tech-pills">
+        <span class="pill">Python</span><span class="pill">Pandas</span><span class="pill">scikit-learn</span><span class="pill">Flask</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-title">WellsFlow</div>
+      <div class="project-role">Lead Architect & Full Stack · 2025</div>
+      <div class="story-block">
+        <div class="story-label">The friction</div>
+        <div class="story-text">Energy logistics was a web of spreadsheets and WhatsApp messages. Orders vanished, inventory counts disagreed, fleet dispatchers worked blind, delays became the norm.</div>
+      </div>
+      <div class="story-block">
+        <div class="story-label">The system</div>
+        <div class="story-text">A unified platform connecting customer orders, inventory, and fleet operations. Normalized database, role‑based access + OTP auth, and a task‑focused UI for each user type.</div>
+      </div>
+      <div class="story-block">
+        <div class="story-label">The outcome</div>
+        <div class="story-text">End‑to‑end visibility from payment to delivery. One system replaced three spreadsheets and a WhatsApp chain.</div>
+      </div>
+      <div class="tech-pills">
+        <span class="pill">Flask</span><span class="pill">HTML</span><span class="pill">PostgreSQL</span><span class="pill">Tailwind</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-title">AdventureWorks Analytics</div>
+      <div class="project-role">BI Developer · 2025</div>
+      <div class="story-block">
+        <div class="story-label">The friction</div>
+        <div class="story-text">A sales team sat on years of transactional data but couldn't answer basic questions: top products, regional gaps, revenue trends. Every question required an analyst to write SQL.</div>
+      </div>
+      <div class="story-block">
+        <div class="story-label">The system</div>
+        <div class="story-text">A star schema in Power BI, four interactive dashboards with forecasting measures, and row‑level security, each manager sees only their own data, no SQL required.</div>
+      </div>
+      <div class="story-block">
+        <div class="story-label">The outcome</div>
+        <div class="story-text">Managers now explore sales drivers independently. A clean data model was 80% of the value; RLS made it enterprise‑ready.</div>
+      </div>
+      <div class="tech-pills">
+        <span class="pill">Power BI</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-- Philosophy section with two-column layout -->
+<section id="philosophy" style="margin-bottom: 80px;">
+  <div class="container">
+    <div class="section-headline">Philosophy</div>
+    <div class="philosophy-grid">
+      <!-- Left: About -->
+      <div class="philosophy-left">
+        <p class="philosophy-about">
+          Every system starts as a blank file. That moment, before anything exists, is where the work begins. I build, then I try to break it: stress‑test edge cases, push past failure points, see what holds. When it ships, it’s done right.
+        </p>
+        <p class="philosophy-about" style="margin-top: 16px; font-style: italic; color: var(--accent-deep);">
+          Data without context is noise. Systems without purpose are just infrastructure.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Background / Education -->
+<div class="background-section">
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="container">
+    <div class="section-headline">Background</div>
+    <div class="edu-item">
+      <span class="edu-year">2021–2025</span>
+      <span class="edu-desc"><strong>BSc in Data Science and Analytics</strong>, United States International University - Africa</span>
+    </div>
+    <div class="edu-item">
+      <span class="edu-year">Certificate</span>
+      <span class="edu-desc"><strong>Software Development</strong>, Modcom Institute of Technology</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div id="contact" class="contact">
+    <div class="contact-closing">
+      <div class="closing-name">George M. Rading</div>
+      <p class="closing-line">When the work resonates, I'd like to hear from you.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:gmr.rading@gmail.com" class="contact-icon-link" title="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <span>gmr.rading@gmail.com</span>
+      </a>
+      <a href="https://github.com/QazGeo" target="_blank" class="contact-icon-link" title="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        <span>github.com/QazGeo</span>
+      </a>
+      <a href="https://linkedin.com/in/george-rating" target="_blank" class="contact-icon-link" title="LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        <span>linkedin.com/in/george-rating</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CLI easter egg -->
+<div class="cli-easteregg">
+  <button class="egg-btn" id="openTerminalBtn">> run george</button>
+</div>
+
+<div id="cliModal" class="term-modal">
+  <div class="term-window">
+    <div class="term-header">
+      <span>george@console:~</span>
+      <button class="close-term" id="closeTerminalBtn">✕</button>
+    </div>
+    <div class="term-body" id="termBody">
+      <div class="term-output" id="bootLine1"></div>
+      <div class="term-output" id="bootLine2"></div>
+      <div class="term-output" id="bootLine3"></div>
+    </div>
+    <div class="term-input-area">
+      <span class="term-prompt">$></span>
+      <input type="text" id="termInput" class="term-input" autocomplete="off">
+    </div>
+  </div>
+</div>
+
+<script>
+  // Typing engine, faster overall (reduced delays)
+  async function typeToTerminal(text, container, isError = false) {
+    const line = document.createElement('div');
+    line.className = 'term-output';
+    if (isError) line.style.color = '#ff9f9f';
+    container.appendChild(line);
+    const len = text.length;
+    let delay = len > 300 ? 6 : len > 150 ? 9 : len > 60 ? 13 : 18;
+    for (let i = 0; i < len; i++) {
+      line.textContent += text[i];
+      await new Promise(r => setTimeout(r, delay));
+    }
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function addStatic(msg, container, isErr = false) {
+    const d = document.createElement('div');
+    d.className = 'term-output';
+    d.style.color = isErr ? '#ff9f9f' : '#e5e5ea';
+    d.innerHTML = msg;
+    container.appendChild(d);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  const modal = document.getElementById('cliModal');
+  const openBtn = document.getElementById('openTerminalBtn');
+  const closeBtn = document.getElementById('closeTerminalBtn');
+  const termOut = document.getElementById('termBody');
+  const termInp = document.getElementById('termInput');
+  let busy = false;
+
+  async function handleCommand(cmd) {
+    if (busy) { addStatic('[busy] wait...', termOut, true); return; }
+    const c = cmd.trim().toLowerCase();
+    busy = true;
+    try {
+      if (c === 'help') await typeToTerminal('commands: projects, skills, about, contact, clear', termOut);
+      else if (c === 'projects') await typeToTerminal('Malawi crop forecasts (climate + ML), WellsFlow logistics (Flask/HTML), AdventureWorks sales analytics (Power BI). Each solves an operational problem.', termOut);
+      else if (c === 'skills') await typeToTerminal('Python, SQL, Pandas, React, Django, Power BI, scikit-learn, PostgreSQL, REST APIs.', termOut);
+      else if (c === 'about') await typeToTerminal('Data and software engineer who builds end-to-end systems. Every project starts as a blank file. The process, the architecture, the debugging, the moment it works, that is the point.', termOut);
+      else if (c === 'contact') await typeToTerminal('Email: gmr.rading@gmail.com | GitHub: github.com/QazGeo', termOut);
+      else if (c === 'clear') { termOut.innerHTML = ''; addStatic('> cleared. type help.', termOut); }
+      else if (c !== '') await typeToTerminal(`unknown: "${cmd}". try help.`, termOut, true);
+    } finally { busy = false; }
+  }
+
+  async function bootSequence() {
+    const b1 = document.getElementById('bootLine1');
+    const b2 = document.getElementById('bootLine2');
+    const b3 = document.getElementById('bootLine3');
+    async function typeLine(el, text, delay) {
+      el.textContent = '';
+      for (let i = 0; i < text.length; i++) {
+        el.textContent += text[i];
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+    await typeLine(b1, '> system initialised.', 28);
+    await new Promise(r => setTimeout(r, 180));
+    await typeLine(b2, '> george@console:~', 28);
+    await new Promise(r => setTimeout(r, 220));
+    await typeLine(b3, "> type 'help' to begin.", 28);
+  }
+
+  openBtn.onclick = () => {
+    modal.style.display = 'flex';
+    requestAnimationFrame(() => modal.classList.add('active'));
+    termInp.focus();
+    bootSequence();
+  };
+  closeBtn.onclick = () => {
+    modal.classList.remove('active');
+    setTimeout(() => modal.style.display = 'none', 300);
+  };
+  modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('active'); setTimeout(() => modal.style.display = 'none', 300); } });
+  termInp.addEventListener('keypress', async (e) => {
+    if (e.key === 'Enter') {
+      const raw = termInp.value;
+      if (!raw.trim()) return;
+      addStatic(`⤷ ${raw}`, termOut);
+      termInp.value = '';
+      await handleCommand(raw);
+    }
+  });
+  document.getElementById('linkedinLink')?.addEventListener('click', (e) => { e.preventDefault(); alert('linkedin.com/in/george-rating, add your profile link'); });
+</script>
+</body>
+</html>
