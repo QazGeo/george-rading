@@ -955,6 +955,11 @@
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
     navLinks.classList.toggle('open');
+    if (hamburger.classList.contains('open')) {
+      nav.classList.add('scrolled');
+    } else if (window.scrollY <= 20) {
+      nav.classList.remove('scrolled');
+    }
   });
 
   // Close menu when a link is clicked
@@ -962,6 +967,9 @@
     link.addEventListener('click', () => {
       hamburger.classList.remove('open');
       navLinks.classList.remove('open');
+      if (window.scrollY <= 20) {
+        nav.classList.remove('scrolled');
+      }
     });
   });
 
