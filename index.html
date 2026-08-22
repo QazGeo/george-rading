@@ -680,7 +680,7 @@
       Data means nothing until someone acts on it. A farmer choosing what to plant. A dispatcher routing the right truck. A manager finally seeing the pattern.<br><br>
       <strong>I build the systems that get them there.</strong>
     </div>
-    <div class="hero-signature">data scientist · full‑stack developer · creative technologist</div>
+    <div class="hero-signature">software engineer, full stack & backend · data science foundation</div>
   </div>
 
   <!-- Toolkit -->
@@ -688,16 +688,24 @@
     <div class="section-headline">My toolkit</div>
     <div class="skills-grid">
       <div class="skill-area">
+        <h4>Backend</h4>
+        <p>FastAPI, Flask · PostgreSQL, SQLAlchemy · REST APIs · JWT & session auth, RBAC</p>
+      </div>
+      <div class="skill-area">
+        <h4>Frontend</h4>
+        <p>React + TypeScript · Tailwind CSS</p>
+      </div>
+      <div class="skill-area">
         <h4>Data & Analytics</h4>
-        <p>Python, R, SQL · Pandas, NumPy · Power BI, Seaborn · ETL, Hadoop</p>
+        <p>Python, R, SQL · Pandas, NumPy · Power BI, Seaborn · SARIMAX</p>
       </div>
       <div class="skill-area">
-        <h4>Development</h4>
-        <p>React + TypeScript · Flask, Django · PostgreSQL, REST APIs · JWT</p>
+        <h4>Infrastructure</h4>
+        <p>Docker · Caddy · Redis · MinIO, HashiCorp Vault · Prometheus, Grafana, Loki · systemd, Git</p>
       </div>
       <div class="skill-area">
-        <h4>ML & Forecasting</h4>
-        <p>scikit-learn · NLTK · SARIMAX</p>
+        <h4>Data Protection</h4>
+        <p>GDPR/FADP compliance · DPIA, ROPA · breach response documentation · encryption at rest & in transit</p>
       </div>
     </div>
   </section>
@@ -707,22 +715,46 @@
     <div class="section-headline">What I've built</div>
 
     <div class="project">
-      <div class="project-title">Malawi Forecasts</div>
-      <div class="project-role">Data Engineer & Full Stack · 2025</div>
+      <div class="project-title">IUCN Procurement Management System</div>
+      <div class="project-role">Solo Developer · IUCN ESARO · 2026</div>
       <div class="story-block">
         <div class="story-label">The friction</div>
-        <div class="story-text">Farmers in rural Malawi were guessing planting seasons. Climate data existed, but only as fragmented files, no one could turn them into a “plant this now” recommendation.</div>
+        <div class="story-text">The office ran procurement across dozens of Excel files, shared between regions by email. One missed update or a broken shared file could throw off the whole plan.</div>
       </div>
       <div class="story-block">
         <div class="story-label">The system</div>
-        <div class="story-text">A pipeline that ingests 5 years of climate records, engineers seasonal features, then runs a decision tree classifier that explains its recommendations in plain language. Offline dashboards + CSV exports for field use without internet.</div>
+        <div class="story-text">A single platform covering the full procurement process end to end: role-based approvals modeled on the office's actual chain, a vendor database, automated cross-region reporting, and full audit logging on every record. A manual entry path stayed available, staff can still work in Excel and re-upload, with the system updating automatically. Runs as 13 containerized services: FastAPI backend, Postgres and Redis, MinIO object storage with HashiCorp Vault managing the encryption keys, Caddy as reverse proxy, and a full Prometheus/Grafana/Loki observability stack.</div>
+      </div>
+      <div class="story-block">
+        <div class="story-label">The compliance layer</div>
+        <div class="story-text">Since the system holds personal data, researched what data protection law actually required and built toward it: encryption at rest, a process for erasing personal data on request, and automated detection for unusual access patterns. Produced the DPIA, ROPA, privacy notice, and breach response runbook as working drafts, while being explicit about which legal questions were outside a developer's remit to decide. Independently flagged that the breach-detection monitoring itself wasn't being monitored, a real gap, and set it as the top priority fix.</div>
       </div>
       <div class="story-block">
         <div class="story-label">The outcome</div>
-        <div class="story-text">Planners now use 5‑year forecasts to guide crop choices. The system is simple enough to trust, flexible enough to adapt.</div>
+        <div class="story-text">Took the system to a working Version 1, demoed it to the supervising team and the staff who'll use it, and gathered feedback to guide what gets built next.</div>
       </div>
       <div class="tech-pills">
-        <span class="pill">Python</span><span class="pill">Pandas</span><span class="pill">scikit-learn</span><span class="pill">Flask</span>
+        <span class="pill">React</span><span class="pill">TypeScript</span><span class="pill">FastAPI</span><span class="pill">PostgreSQL</span><span class="pill">Redis</span><span class="pill">MinIO</span><span class="pill">Vault</span><span class="pill">Caddy</span><span class="pill">Prometheus/Grafana/Loki</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-title">Malawi Forecasts</div>
+      <div class="project-role">Lead Developer & Data Engineer · 2025</div>
+      <div class="story-block">
+        <div class="story-label">The friction</div>
+        <div class="story-text">Farmers in rural Malawi were guessing planting seasons. Climate data existed, but only as fragmented files, no one could turn them into a "plant this now" recommendation.</div>
+      </div>
+      <div class="story-block">
+        <div class="story-label">The system</div>
+        <div class="story-text">SARIMAX models independently forecast rainfall, vegetation health, and land surface temperature five years forward per region, validated with walk-forward time series testing rather than a single train/test split. A crop suitability model, grounded in FAO agronomic threshold data, scores six staple crops against those forecasts and produces a ranked, plain-language recommendation per region.</div>
+      </div>
+      <div class="story-block">
+        <div class="story-label">The outcome</div>
+        <div class="story-text">Delivered as offline dashboards, downloadable PDF reports, and CSV exports, built to work in low-connectivity field settings.</div>
+      </div>
+      <div class="tech-pills">
+        <span class="pill">Python</span><span class="pill">SARIMAX</span><span class="pill">Pandas</span><span class="pill">Flask</span>
       </div>
     </div>
 
@@ -794,6 +826,10 @@
   <div class="bg-orb bg-orb-2"></div>
   <div class="container">
     <div class="section-headline">Background</div>
+    <div class="edu-item">
+      <span class="edu-year">2026–Present</span>
+      <span class="edu-desc"><strong>Full Stack Developer (IT Intern)</strong>, IUCN Eastern & Southern Africa Regional Office</span>
+    </div>
     <div class="edu-item">
       <span class="edu-year">2023–2026</span>
       <span class="edu-desc"><strong>BSc in Data Science and Analytics</strong>, United States International University - Africa</span>
@@ -899,9 +935,9 @@
     busy = true;
     try {
       if (c === 'help') await typeToTerminal('commands: projects, skills, about, contact, clear', termOut);
-      else if (c === 'projects') await typeToTerminal('Malawi crop forecasts (climate + ML), WellsFlow logistics (Flask/HTML), AdventureWorks sales analytics (Power BI). Each solves an operational problem.', termOut);
-      else if (c === 'skills') await typeToTerminal('Python, SQL, Pandas, React, Django, Power BI, scikit-learn, PostgreSQL, REST APIs.', termOut);
-      else if (c === 'about') await typeToTerminal('Data and software engineer who builds end-to-end systems. Every project starts as a blank file. The process, the architecture, the debugging, the moment it works, that is the point.', termOut);
+      else if (c === 'projects') await typeToTerminal('IUCN procurement system (13-container stack: FastAPI/React, Postgres, Redis, MinIO+Vault, Caddy, Prometheus/Grafana/Loki, solo, prod), Malawi crop forecasts (SARIMAX + FAO suitability model), WellsFlow logistics (Flask/PostgreSQL), AdventureWorks sales analytics (Power BI). Each solves an operational problem end to end.', termOut);
+      else if (c === 'skills') await typeToTerminal('FastAPI, React/TypeScript, PostgreSQL, Redis, MinIO, Vault, Docker, Caddy, Prometheus/Grafana/Loki, Python, SQL, Pandas, Power BI, SARIMAX, DPIA/ROPA data protection work.', termOut);
+      else if (c === 'about') await typeToTerminal('Software engineer, full stack and backend, with a data science foundation. Every project starts as a blank file. The process, the architecture, the debugging, the moment it works, that is the point.', termOut);
       else if (c === 'contact') await typeToTerminal('Email: gmr.rading@gmail.com | GitHub: github.com/QazGeo', termOut);
       else if (c === 'clear') { termOut.innerHTML = ''; addStatic('> cleared. type help.', termOut); }
       else if (c !== '') await typeToTerminal(`unknown: "${cmd}". try help.`, termOut, true);
